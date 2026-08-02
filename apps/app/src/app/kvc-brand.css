@@ -1,0 +1,153 @@
+/**
+ * KVC Cowork — Brand Override for OpenWork
+ * Drop this at apps/app/src/app/index.css (after existing @import lines)
+ *
+ * KVC Neon-Noir Design System
+ *   Pink  #FF69B4 | Blue  #87CEEB | Gold  #FFD700
+ *   BG    #1E1E24 | Card  #25252D | Text  #F0F0F0
+ */
+
+@import url("https://fonts.googleapis.com/css2?family=Lobster&family=Montserrat:wght@400;500;600;700;800;900&family=Fira+Code:wght@400;500;600&display=swap");
+
+/* ── KVC Brand Tokens ─────────────────────────────────────── */
+:root {
+  --kvc-bg:        #1e1e24;
+  --kvc-bg-card:   #25252d;
+  --kvc-text:      #f0f0f0;
+  --kvc-muted:     #9ca3af;
+  --kvc-pink:      #ff69b4;
+  --kvc-pink-dark: #e0558f;
+  --kvc-blue:      #87ceeb;
+  --kvc-blue-dark: #5bb8e0;
+  --kvc-gold:      #ffd700;
+  --kvc-gold-dark: #e0b800;
+  --kvc-border:    rgba(240,240,240,0.10);
+  --kvc-success:   #10b981;
+
+  --font-heading: "Lobster", cursive;
+  --font-body:    "Montserrat", ui-sans-serif, system-ui, sans-serif;
+  --font-mono:    "Fira Code", ui-monospace, monospace;
+
+  /* ── Map to OpenWork Radix vars ─────────────────────────── */
+  /* Override the dark-mode accent to KVC pink */
+  --accent-9:    #ff69b4;
+  --accent-10:   #e0558f;
+  --accent-11:   #ff69b4;
+  --accent-a9:   rgba(255,105,180,0.9);
+  --accent-a10:  rgba(255,105,180,0.8);
+
+  /* Focus ring */
+  --focus-8:     rgba(255,105,180,0.5);
+}
+
+/* Force dark base — OpenWork supports .dark class + media query */
+html, body, #root {
+  background: var(--kvc-bg) !important;
+  color: var(--kvc-text) !important;
+  font-family: var(--font-body) !important;
+}
+
+/* ── Sidebar overrides ─────────────────────────────────────── */
+[class*="sidebar"], [data-sidebar], aside {
+  background: #16161c !important;
+  border-right: 1px solid var(--kvc-border) !important;
+}
+
+/* ── App title / logo area ─────────────────────────────────── */
+[class*="app-name"], [class*="brand"], [class*="logo-text"] {
+  font-family: var(--font-heading) !important;
+  color: var(--kvc-pink) !important;
+  text-shadow: 0 0 16px rgba(255,105,180,0.4) !important;
+}
+
+/* ── Primary buttons ───────────────────────────────────────── */
+button[class*="primary"], [class*="btn-primary"], [class*="button-primary"],
+[data-variant="primary"] {
+  background: linear-gradient(135deg, var(--kvc-gold) 0%, var(--kvc-gold-dark) 100%) !important;
+  color: #000 !important;
+  font-weight: 700 !important;
+  font-family: var(--font-body) !important;
+  border: none !important;
+  box-shadow: 0 0 0 1px rgba(255,215,0,0.35), 0 0 20px rgba(255,215,0,0.15) !important;
+}
+
+/* ── Input focus ───────────────────────────────────────────── */
+input:focus, textarea:focus, [contenteditable]:focus {
+  outline-color: var(--kvc-pink) !important;
+  box-shadow: 0 0 0 2px rgba(255,105,180,0.25) !important;
+}
+
+/* ── Scrollbar ─────────────────────────────────────────────── */
+::-webkit-scrollbar { width: 5px; height: 5px; }
+::-webkit-scrollbar-track { background: var(--kvc-bg); }
+::-webkit-scrollbar-thumb { background: rgba(255,105,180,0.3); border-radius: 3px; }
+::-webkit-scrollbar-thumb:hover { background: rgba(255,105,180,0.6); }
+
+/* ── Text selection ────────────────────────────────────────── */
+::selection { background: rgba(255,105,180,0.25); color: #fff; }
+
+/* ── Code blocks ───────────────────────────────────────────── */
+code, pre, [class*="code-block"], [class*="codeblock"] {
+  font-family: var(--font-mono) !important;
+  background: rgba(0,0,0,0.4) !important;
+  border: 1px solid rgba(135,206,235,0.15) !important;
+  border-radius: 8px !important;
+}
+
+/* ── Chat message area ─────────────────────────────────────── */
+[class*="message-list"], [class*="chat-messages"], [data-chat-area] {
+  background: var(--kvc-bg) !important;
+}
+
+/* AI assistant message bubble */
+[class*="assistant-message"], [data-role="assistant"],
+[class*="ai-message"] {
+  background: var(--kvc-bg-card) !important;
+  border: 1px solid rgba(135,206,235,0.12) !important;
+  border-radius: 12px !important;
+}
+
+/* ── Provider pill/badge overrides ─────────────────────────── */
+/* Kimi — pink highlight as main orchestrator */
+[data-provider="moonshot"], [data-provider="kimi"],
+[class*="kimi"], [class*="moonshot"] {
+  accent-color: var(--kvc-pink) !important;
+}
+
+/* Cloudflare — blue */
+[data-provider="cloudflare"],
+[class*="cloudflare-workers-ai"] {
+  accent-color: var(--kvc-blue) !important;
+}
+
+/* OpenRouter — gold */
+[data-provider="openrouter"] {
+  accent-color: var(--kvc-gold) !important;
+}
+
+/* NVIDIA — green */
+[data-provider="nvidia"] {
+  accent-color: var(--kvc-success) !important;
+}
+
+/* ── KVC Cowork watermark ───────────────────────────────────── */
+body::after {
+  content: "KVC Cowork";
+  position: fixed;
+  bottom: 12px;
+  right: 16px;
+  font-family: var(--font-heading);
+  font-size: 12px;
+  color: rgba(255,105,180,0.4);
+  pointer-events: none;
+  z-index: 9999;
+  letter-spacing: 0.05em;
+}
+
+/* ── Neon grid background on empty states ──────────────────── */
+[class*="empty-state"], [class*="welcome-screen"], [class*="onboarding"] {
+  background-image:
+    linear-gradient(rgba(255,105,180,0.03) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255,105,180,0.03) 1px, transparent 1px) !important;
+  background-size: 40px 40px !important;
+}
