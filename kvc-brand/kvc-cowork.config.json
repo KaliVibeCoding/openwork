@@ -1,0 +1,129 @@
+{
+  "$schema": "https://openwork.dev/config-schema.json",
+  "name": "KVC Cowork",
+  "version": "1.0.0",
+  "description": "KaliVibeCoding enterprise AI workspace — Kimi 3 orchestrator + full model fleet",
+  "branding": {
+    "appName": "KVC Cowork",
+    "tagline": "Build once. Systemize forever.",
+    "logoUrl": "https://cdn.abacus.ai/images/134ce4b7-b0d1-4ba8-8655-3afd323fb646.png",
+    "accentColor": "#ff69b4",
+    "theme": "dark"
+  },
+  "providers": {
+    "moonshot": {
+      "name": "Kimi 3 (Moonshot AI)",
+      "apiBaseUrl": "https://api.moonshot.cn/v1",
+      "apiKey": "${MOONSHOT_API_KEY}",
+      "defaultModel": "moonshot-v1-128k",
+      "priority": 1,
+      "badge": "KVC Primary"
+    },
+    "cloudflare": {
+      "name": "Cloudflare Workers AI",
+      "apiBaseUrl": "https://api.cloudflare.com/client/v4/accounts/${CF_ACCOUNT_ID}/ai/v1",
+      "apiKey": "${CF_AI_API_TOKEN}",
+      "defaultModel": "@cf/meta/llama-3.3-70b-instruct-fp8-fast",
+      "priority": 2,
+      "badge": "Free · Edge",
+      "free": true
+    },
+    "openrouter": {
+      "name": "OpenRouter",
+      "apiBaseUrl": "https://openrouter.ai/api/v1",
+      "apiKey": "${OPENROUTER_API_KEY}",
+      "defaultModel": "meta-llama/llama-3.1-8b-instruct:free",
+      "priority": 3,
+      "badge": "Free tier available",
+      "freeModels": [
+        "mistralai/mistral-7b-instruct:free",
+        "meta-llama/llama-3.1-8b-instruct:free",
+        "google/gemma-2-9b-it:free",
+        "microsoft/phi-3-mini-128k-instruct:free",
+        "qwen/qwen-2-7b-instruct:free"
+      ]
+    },
+    "nvidia": {
+      "name": "NVIDIA NIM",
+      "apiBaseUrl": "https://integrate.api.nvidia.com/v1",
+      "apiKey": "${NVIDIA_API_KEY}",
+      "defaultModel": "nvidia/llama-3.1-nemotron-70b-instruct",
+      "priority": 4,
+      "badge": "High perf"
+    },
+    "anthropic": {
+      "name": "Anthropic (Claude)",
+      "apiKey": "${ANTHROPIC_API_KEY}",
+      "defaultModel": "claude-opus-4-5",
+      "priority": 5
+    },
+    "openai": {
+      "name": "OpenAI",
+      "apiKey": "${OPENAI_API_KEY}",
+      "defaultModel": "gpt-4o",
+      "priority": 6
+    }
+  },
+  "defaultProvider": "moonshot",
+  "defaultModel": "moonshot-v1-128k",
+  "orchestrator": {
+    "provider": "moonshot",
+    "model": "moonshot-v1-128k",
+    "systemPrompt": "You are KVC Cowork AI — the intelligent assistant for KaliVibeCoding's enterprise workspace. You help builders create AI systems, automate workflows, and ship products fast. Code to the Rhythm. Build by the Beat.",
+    "temperature": 0.7,
+    "maxTokens": 8192
+  },
+  "skills": {
+    "autoLoad": true,
+    "registries": [
+      "https://skills.kalivibecoding.com/registry.json"
+    ]
+  },
+  "mcpServers": {
+    "cloudflare": {
+      "command": "npx",
+      "args": ["@cloudflare/mcp-server-cloudflare@latest"],
+      "env": {
+        "CLOUDFLARE_API_TOKEN": "${CF_API_TOKEN}",
+        "CLOUDFLARE_ACCOUNT_ID": "${CF_ACCOUNT_ID}"
+      }
+    },
+    "github": {
+      "command": "npx",
+      "args": ["@modelcontextprotocol/server-github@latest"],
+      "env": {
+        "GITHUB_PERSONAL_ACCESS_TOKEN": "${GITHUB_PAT}"
+      }
+    },
+    "filesystem": {
+      "command": "npx",
+      "args": ["@modelcontextprotocol/server-filesystem@latest", "${HOME}/kalivibecoding"]
+    },
+    "memory": {
+      "command": "npx",
+      "args": ["@modelcontextprotocol/server-memory@latest"]
+    },
+    "ghl": {
+      "command": "npx",
+      "args": ["@kvc/mcp-ghl@latest"],
+      "env": {
+        "GHL_API_KEY": "${GHL_API_KEY}",
+        "GHL_LOCATION_ID": "${GHL_LOCATION_ID}"
+      }
+    }
+  },
+  "workspace": {
+    "name": "KaliVibeCoding Enterprise",
+    "owner": "Rick Jefferson",
+    "company": "KaliVibeCoding",
+    "website": "https://kalivibecoding.com",
+    "email": "hello@kalivibecoding.com"
+  },
+  "features": {
+    "multiModel": true,
+    "agentOrchestration": true,
+    "skillSharing": true,
+    "cloudSync": false,
+    "analytics": true
+  }
+}
